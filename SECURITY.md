@@ -18,3 +18,5 @@ Please include:
 ## Pi package security note
 
 Pi packages can execute code with local user permissions. Review installed packages and avoid running untrusted extensions.
+
+Do not include Cursor API keys, local runtime logs, or full dependency files in public issues. This package writes a dependency file only after an exact graph/hash check; report any unexpected write target privately.
