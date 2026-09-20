@@ -1,6 +1,6 @@
 {
   "name": "pi-cursor-embedded-compat",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Guarded Pi compatibility shim for Cursor SDK module resolution in embedded hosts.",
   "type": "module",
   "license": "MIT",

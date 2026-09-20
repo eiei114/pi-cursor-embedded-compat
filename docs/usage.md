@@ -5,7 +5,7 @@
 Load the shim before `pi-cursor-sdk`:
 
 ```json
-["--no-extensions", "-e", "npm:pi-cursor-embedded-compat@0.1.0", "-e", "npm:pi-cursor-sdk"]
+["--no-extensions", "-e", "npm:pi-cursor-embedded-compat@0.2.0", "-e", "npm:pi-cursor-sdk"]
 ```
 
 The shim checks the four-package graph, resolves `@connectrpc/connect` through the Pi npm layout, and applies the registered transform before the first Cursor request. It does not register a provider or issue a retry.

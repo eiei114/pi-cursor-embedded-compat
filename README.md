@@ -33,7 +33,7 @@ pi install npm:pi-cursor-embedded-compat
 Load it before `pi-cursor-sdk` in an embedded Cursor profile:
 
 ```json
-["--no-extensions", "-e", "npm:pi-cursor-embedded-compat@0.1.0", "-e", "npm:pi-cursor-sdk"]
+["--no-extensions", "-e", "npm:pi-cursor-embedded-compat@0.2.0", "-e", "npm:pi-cursor-sdk"]
 ```
 
 The extension performs its check when loaded. It does not expose a command or tool.
@@ -47,6 +47,8 @@ Example shape:
 ```text
 [cursor_compat] {"source":"pi-cursor-embedded-compat","action":"patched","entryId":"connect-1.7.0-pi-cursor-sdk-0.2.0","target":"dist/esm/http-headers.js","graph":{"piCursorSdk":"0.2.0","cursorSdk":"1.0.23","connect":"1.7.0","protobuf":"1.10.0"}}
 ```
+
+Registered graphs: `pi-cursor-sdk 0.2.0` / `@cursor/sdk 1.0.23` and `pi-cursor-sdk 0.3.6` / `@cursor/sdk 1.0.31`, both on `@connectrpc/connect 1.7.0` and `@bufbuild/protobuf 1.10.0`.
 
 An unknown failing signature stops the shim without modifying the file. Rollback is performed by reinstalling the dependency tree; the shim does not keep third-party backups.
 
