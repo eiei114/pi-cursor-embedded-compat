@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+- Routine patch refresh after a seven-day update interval; no behavior changes.
+
 ## 0.2.0
 
 - Register the `pi-cursor-sdk 0.3.6` / `@cursor/sdk 1.0.31` dependency graph used by `pi-agent-bundles` v0.10.0, so Cursor lanes stop failing closed with `unsupported_graph`.

@@ -33,7 +33,7 @@ pi install npm:pi-cursor-embedded-compat
 Load it before `pi-cursor-sdk` in an embedded Cursor profile:
 
 ```json
-["--no-extensions", "-e", "npm:pi-cursor-embedded-compat@0.2.0", "-e", "npm:pi-cursor-sdk"]
+["--no-extensions", "-e", "npm:pi-cursor-embedded-compat@0.2.1", "-e", "npm:pi-cursor-sdk"]
 ```
 
 The extension performs its check when loaded. It does not expose a command or tool.
