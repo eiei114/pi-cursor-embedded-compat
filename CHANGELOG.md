@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2] - 2026-09-30
+
+### Changed
+
+- Update `@earendil-works/pi-*` dependencies to `0.99.1`.
+
+
 ## 0.2.1
 
 - Routine patch refresh after a seven-day update interval; no behavior changes.
