@@ -36,7 +36,8 @@
     "pack:check": "npm pack --dry-run",
     "publish:guard": "node scripts/check-no-npm-token.mjs",
     "canary:live": "node --experimental-strip-types scripts/live-canary.mjs",
-    "ci": "npm run typecheck && npm test && npm run pack:check && npm run publish:guard"
+    "smoke:pi": "node --experimental-strip-types scripts/pi-sdk-smoke.mjs",
+    "ci": "npm run typecheck && npm test && npm run smoke:pi && npm run pack:check && npm run publish:guard"
   },
   "pi": {
     "extensions": [
@@ -47,7 +48,10 @@
     "@earendil-works/pi-coding-agent": "*"
   },
   "devDependencies": {
-    "@earendil-works/pi-coding-agent": "^0.99.1",
+    "@earendil-works/pi-agent-core": "1.1.0",
+    "@earendil-works/pi-ai": "1.1.0",
+    "@earendil-works/pi-coding-agent": "1.1.0",
+    "@earendil-works/pi-tui": "1.1.0",
     "@types/node": "^26.0.0",
     "typescript": "^7.0.2"
   }

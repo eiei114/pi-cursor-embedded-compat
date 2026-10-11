@@ -1,0 +1,376 @@
+{
+  "schema_version": 1,
+  "verification_contract": "pi-sdk-behavior-v2",
+  "sdk_versions": {
+    "@earendil-works/pi-agent-core": "1.1.0",
+    "@earendil-works/pi-ai": "1.1.0",
+    "@earendil-works/pi-coding-agent": "1.1.0",
+    "@earendil-works/pi-tui": "1.1.0"
+  },
+  "platform": "win32",
+  "model_inference": "none; actual pinned Pi host and extension lifecycle with a local deterministic Cursor dependency/file fixture",
+  "fixture_boundary": "Only the Cursor dependency graph and target file are synthetic; Pi's SDK process, extension loader, extension code, Node file resolution, patch write/read-back, failure handling, and native shell are real.",
+  "unhandled_errors": 0,
+  "extension_load_errors": 0,
+  "cases": [
+    {
+      "name": "extension_load",
+      "command": "npm run smoke:pi",
+      "exit_code": 0,
+      "passed": true,
+      "evidence": {
+        "stdout": "",
+        "stderr": "[cursor_compat] {\"source\":\"pi-cursor-embedded-compat\",\"action\":\"already_patched\",\"entryId\":\"connect-1.7.0-pi-cursor-sdk-0.2.0\",\"target\":\"dist/esm/http-headers.js\",\"graph\":{\"piCursorSdk\":\"0.2.0\",\"cursorSdk\":\"1.0.23\",\"connect\":\"1.7.0\",\"protobuf\":\"1.10.0\"}}\n",
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "process_exit_observed": true,
+        "timed_out": false,
+        "output_limit_exceeded": false,
+        "spawn_error": null,
+        "cleanup_action": null,
+        "compatibility_diagnostics": [
+          {
+            "source": "pi-cursor-embedded-compat",
+            "action": "already_patched",
+            "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+            "target": "dist/esm/http-headers.js",
+            "graph": {
+              "piCursorSdk": "0.2.0",
+              "cursorSdk": "1.0.23",
+              "connect": "1.7.0",
+              "protobuf": "1.10.0"
+            }
+          }
+        ],
+        "target_sha256": "e1c96a4af7b9470cc2b7bceabae4deb0f26f73c81b12f8654944d54d5642f1bc",
+        "target_bytes": 2191,
+        "prior_processes": []
+      },
+      "assertions": [
+        {
+          "id": "extension_registered",
+          "expected": "The actual pinned Pi host executes this extension and records a supported compatibility outcome",
+          "observed": {
+            "diagnostic": {
+              "source": "pi-cursor-embedded-compat",
+              "action": "already_patched",
+              "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+              "target": "dist/esm/http-headers.js",
+              "graph": {
+                "piCursorSdk": "0.2.0",
+                "cursorSdk": "1.0.23",
+                "connect": "1.7.0",
+                "protobuf": "1.10.0"
+              }
+            },
+            "exit_code": 0,
+            "process_exit_observed": true
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "happy_path",
+      "command": "npm run smoke:pi",
+      "exit_code": 0,
+      "passed": true,
+      "evidence": {
+        "stdout": "",
+        "stderr": "[cursor_compat] {\"source\":\"pi-cursor-embedded-compat\",\"action\":\"patched\",\"entryId\":\"connect-1.7.0-pi-cursor-sdk-0.2.0\",\"target\":\"dist/esm/http-headers.js\",\"graph\":{\"piCursorSdk\":\"0.2.0\",\"cursorSdk\":\"1.0.23\",\"connect\":\"1.7.0\",\"protobuf\":\"1.10.0\"}}\n",
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "process_exit_observed": true,
+        "timed_out": false,
+        "output_limit_exceeded": false,
+        "spawn_error": null,
+        "cleanup_action": null,
+        "compatibility_diagnostics": [
+          {
+            "source": "pi-cursor-embedded-compat",
+            "action": "patched",
+            "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+            "target": "dist/esm/http-headers.js",
+            "graph": {
+              "piCursorSdk": "0.2.0",
+              "cursorSdk": "1.0.23",
+              "connect": "1.7.0",
+              "protobuf": "1.10.0"
+            }
+          }
+        ],
+        "target_sha256": "e1c96a4af7b9470cc2b7bceabae4deb0f26f73c81b12f8654944d54d5642f1bc",
+        "target_bytes": 2191,
+        "prior_processes": []
+      },
+      "assertions": [
+        {
+          "id": "feature_response",
+          "expected": "The actual Pi-loaded extension patches the fixture target, verifies its registered hash, and exits cleanly",
+          "observed": {
+            "diagnostic": {
+              "source": "pi-cursor-embedded-compat",
+              "action": "patched",
+              "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+              "target": "dist/esm/http-headers.js",
+              "graph": {
+                "piCursorSdk": "0.2.0",
+                "cursorSdk": "1.0.23",
+                "connect": "1.7.0",
+                "protobuf": "1.10.0"
+              }
+            },
+            "target_sha256": "e1c96a4af7b9470cc2b7bceabae4deb0f26f73c81b12f8654944d54d5642f1bc",
+            "exit_code": 0
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "error_path",
+      "command": "npm run smoke:pi",
+      "exit_code": 1,
+      "passed": true,
+      "evidence": {
+        "stdout": "",
+        "stderr": "[cursor_compat] {\"source\":\"pi-cursor-embedded-compat\",\"code\":\"signature_mismatch\",\"entryId\":\"connect-1.7.0-pi-cursor-sdk-0.2.0\",\"target\":\"dist/esm/http-headers.js\",\"graph\":{\"piCursorSdk\":\"0.2.0\",\"cursorSdk\":\"1.0.23\",\"connect\":\"1.7.0\",\"protobuf\":\"1.10.0\"},\"message\":\"known failure signature found under an unregistered content hash\"}\nError: Failed to load extension \"<smoke-root>\\error path fixture VMmy5X\\extensions\\index.ts\": Failed to load extension: [pi-cursor-embedded-compat] signature_mismatch\nHint: Start without extensions using \"pi -ne\".\n",
+        "actual_exit_code": 1,
+        "actual_signal": null,
+        "process_exit_observed": true,
+        "timed_out": false,
+        "output_limit_exceeded": false,
+        "spawn_error": null,
+        "cleanup_action": null,
+        "compatibility_diagnostics": [
+          {
+            "source": "pi-cursor-embedded-compat",
+            "code": "signature_mismatch",
+            "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+            "target": "dist/esm/http-headers.js",
+            "graph": {
+              "piCursorSdk": "0.2.0",
+              "cursorSdk": "1.0.23",
+              "connect": "1.7.0",
+              "protobuf": "1.10.0"
+            },
+            "message": "known failure signature found under an unregistered content hash"
+          }
+        ],
+        "target_sha256": "1961c50e6332b6e6d94f8fd458393b6f9ac06e3864625c5de9a101dae2a0594d",
+        "target_bytes": 2106,
+        "prior_processes": []
+      },
+      "assertions": [
+        {
+          "id": "handled_error",
+          "expected": "The actual Pi host captures the unsupported-signature failure, leaves the target unchanged, and exits without an unhandled error",
+          "observed": {
+            "diagnostic": {
+              "source": "pi-cursor-embedded-compat",
+              "code": "signature_mismatch",
+              "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+              "target": "dist/esm/http-headers.js",
+              "graph": {
+                "piCursorSdk": "0.2.0",
+                "cursorSdk": "1.0.23",
+                "connect": "1.7.0",
+                "protobuf": "1.10.0"
+              },
+              "message": "known failure signature found under an unregistered content hash"
+            },
+            "target_sha256": "1961c50e6332b6e6d94f8fd458393b6f9ac06e3864625c5de9a101dae2a0594d",
+            "expected_unchanged_sha256": "1961c50e6332b6e6d94f8fd458393b6f9ac06e3864625c5de9a101dae2a0594d",
+            "exit_code": 1,
+            "extension_load_error": true,
+            "captured_extension_failure": true
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "reload_cleanup",
+      "command": "npm run smoke:pi",
+      "exit_code": 0,
+      "passed": true,
+      "evidence": {
+        "stdout": "",
+        "stderr": "[cursor_compat] {\"source\":\"pi-cursor-embedded-compat\",\"action\":\"already_patched\",\"entryId\":\"connect-1.7.0-pi-cursor-sdk-0.2.0\",\"target\":\"dist/esm/http-headers.js\",\"graph\":{\"piCursorSdk\":\"0.2.0\",\"cursorSdk\":\"1.0.23\",\"connect\":\"1.7.0\",\"protobuf\":\"1.10.0\"}}\n",
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "process_exit_observed": true,
+        "timed_out": false,
+        "output_limit_exceeded": false,
+        "spawn_error": null,
+        "cleanup_action": null,
+        "compatibility_diagnostics": [
+          {
+            "source": "pi-cursor-embedded-compat",
+            "action": "already_patched",
+            "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+            "target": "dist/esm/http-headers.js",
+            "graph": {
+              "piCursorSdk": "0.2.0",
+              "cursorSdk": "1.0.23",
+              "connect": "1.7.0",
+              "protobuf": "1.10.0"
+            }
+          }
+        ],
+        "target_sha256": "e1c96a4af7b9470cc2b7bceabae4deb0f26f73c81b12f8654944d54d5642f1bc",
+        "target_bytes": 2191,
+        "prior_processes": [
+          {
+            "stdout": "",
+            "stderr": "[cursor_compat] {\"source\":\"pi-cursor-embedded-compat\",\"action\":\"patched\",\"entryId\":\"connect-1.7.0-pi-cursor-sdk-0.2.0\",\"target\":\"dist/esm/http-headers.js\",\"graph\":{\"piCursorSdk\":\"0.2.0\",\"cursorSdk\":\"1.0.23\",\"connect\":\"1.7.0\",\"protobuf\":\"1.10.0\"}}\n",
+            "actual_exit_code": 0,
+            "process_exit_observed": true,
+            "timed_out": false,
+            "spawn_error": null,
+            "compatibility_diagnostics": [
+              {
+                "source": "pi-cursor-embedded-compat",
+                "action": "patched",
+                "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+                "target": "dist/esm/http-headers.js",
+                "graph": {
+                  "piCursorSdk": "0.2.0",
+                  "cursorSdk": "1.0.23",
+                  "connect": "1.7.0",
+                  "protobuf": "1.10.0"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "reloaded_extension_registered",
+          "expected": "The first process patches successfully and a second, separate pinned Pi process executes the extension against the same dependency tree",
+          "observed": {
+            "first_process_diagnostic": {
+              "source": "pi-cursor-embedded-compat",
+              "action": "patched",
+              "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+              "target": "dist/esm/http-headers.js",
+              "graph": {
+                "piCursorSdk": "0.2.0",
+                "cursorSdk": "1.0.23",
+                "connect": "1.7.0",
+                "protobuf": "1.10.0"
+              }
+            },
+            "first_process_exit_code": 0,
+            "diagnostic": {
+              "source": "pi-cursor-embedded-compat",
+              "action": "already_patched",
+              "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+              "target": "dist/esm/http-headers.js",
+              "graph": {
+                "piCursorSdk": "0.2.0",
+                "cursorSdk": "1.0.23",
+                "connect": "1.7.0",
+                "protobuf": "1.10.0"
+              }
+            },
+            "exit_code": 0,
+            "process_exit_observed": true
+          },
+          "passed": true
+        },
+        {
+          "id": "reloaded_feature_response",
+          "expected": "The second process reports already_patched with the verified target hash and preserves the patched file",
+          "observed": {
+            "diagnostic": {
+              "source": "pi-cursor-embedded-compat",
+              "action": "already_patched",
+              "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+              "target": "dist/esm/http-headers.js",
+              "graph": {
+                "piCursorSdk": "0.2.0",
+                "cursorSdk": "1.0.23",
+                "connect": "1.7.0",
+                "protobuf": "1.10.0"
+              }
+            },
+            "target_sha256": "e1c96a4af7b9470cc2b7bceabae4deb0f26f73c81b12f8654944d54d5642f1bc"
+          },
+          "passed": true
+        },
+        {
+          "id": "clean_shutdown",
+          "expected": "The second actual Pi process exits zero without timeout or unhandled/shutdown errors",
+          "observed": {
+            "exit_code": 0,
+            "process_exit_observed": true,
+            "timed_out": false,
+            "unhandled_error": false
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "host_shell",
+      "command": "npm run smoke:pi",
+      "exit_code": 0,
+      "passed": true,
+      "evidence": {
+        "stdout": "",
+        "stderr": "[cursor_compat] {\"source\":\"pi-cursor-embedded-compat\",\"action\":\"patched\",\"entryId\":\"connect-1.7.0-pi-cursor-sdk-0.2.0\",\"target\":\"dist/esm/http-headers.js\",\"graph\":{\"piCursorSdk\":\"0.2.0\",\"cursorSdk\":\"1.0.23\",\"connect\":\"1.7.0\",\"protobuf\":\"1.10.0\"}}\n",
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "process_exit_observed": true,
+        "timed_out": false,
+        "output_limit_exceeded": false,
+        "spawn_error": null,
+        "cleanup_action": null,
+        "compatibility_diagnostics": [
+          {
+            "source": "pi-cursor-embedded-compat",
+            "action": "patched",
+            "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+            "target": "dist/esm/http-headers.js",
+            "graph": {
+              "piCursorSdk": "0.2.0",
+              "cursorSdk": "1.0.23",
+              "connect": "1.7.0",
+              "protobuf": "1.10.0"
+            }
+          }
+        ],
+        "target_sha256": "e1c96a4af7b9470cc2b7bceabae4deb0f26f73c81b12f8654944d54d5642f1bc",
+        "target_bytes": 2191,
+        "prior_processes": []
+      },
+      "assertions": [
+        {
+          "id": "native_shell_boundary",
+          "expected": "The native Windows PowerShell or POSIX shell launches the pinned Pi host and the extension patches the target",
+          "observed": {
+            "shell": "powershell.exe",
+            "expected_shell": "powershell.exe",
+            "diagnostic": {
+              "source": "pi-cursor-embedded-compat",
+              "action": "patched",
+              "entryId": "connect-1.7.0-pi-cursor-sdk-0.2.0",
+              "target": "dist/esm/http-headers.js",
+              "graph": {
+                "piCursorSdk": "0.2.0",
+                "cursorSdk": "1.0.23",
+                "connect": "1.7.0",
+                "protobuf": "1.10.0"
+              }
+            },
+            "target_sha256": "e1c96a4af7b9470cc2b7bceabae4deb0f26f73c81b12f8654944d54d5642f1bc",
+            "exit_code": 0
+          },
+          "passed": true
+        }
+      ]
+    }
+  ]
+}
