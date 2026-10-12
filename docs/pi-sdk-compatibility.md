@@ -24,8 +24,8 @@ fixture for the Cursor dependency graph and target file, but does not mock the P
 SDK process, extension loader, package extension code, dependency resolution,
 patch write/read-back, error handling, process cleanup, or host shell. Each Pi
 probe has a 15-second deadline and records whether process exit was observed.
-The report captures each process's stdout/stderr and target-file hash. A deliberate
-extension-load failure in `error_path` is expected: Pi reports the exact
-`signature_mismatch` and exits with its expected nonzero status. It counts as
-handled only when the failure is captured, the target stays unchanged, and no
-unhandled error occurs; unexpected load errors remain failures.
+The report captures each process's stdout/stderr and target-file hash. In
+`error_path`, the extension reports the exact `signature_mismatch` diagnostic
+without throwing during Pi extension loading. The host exits cleanly, the target
+remains unchanged, and the failure remains visible in stderr; unexpected
+extension-load or unhandled errors remain failures.

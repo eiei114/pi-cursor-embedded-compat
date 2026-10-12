@@ -57,25 +57,23 @@ test("extension load and happy path require real diagnostic and target-file obse
   }
 });
 
-test("handled error requires a captured Pi load failure, exact code, expected exit and no file mutation", () => {
+test("handled error requires a clean Pi exit, exact diagnostic and no file mutation", () => {
   const error = {
     ...goodRuntime,
     diagnostic: diagnostic({ code: "signature_mismatch", action: undefined }),
     target_sha256: unchangedHash,
     expected_unchanged_sha256: unchangedHash,
-    extension_load_error: true,
-    captured_extension_failure: true,
-    exit_code: 1,
+    extension_load_error: false,
+    exit_code: 0,
   };
   assert.deepEqual(behaviorAssertions("error_path", error).map((item) => item.id), ["handled_error"]);
   assert.equal(passed("error_path", error), true);
   for (const bad of [
     { ...error, diagnostic: diagnostic({ code: "write_failed" }) },
     { ...error, target_sha256: patchedHash },
-    { ...error, extension_load_error: false },
-    { ...error, captured_extension_failure: false },
+    { ...error, extension_load_error: true },
     { ...error, unhandled_error: true },
-    { ...error, exit_code: 0 },
+    { ...error, exit_code: 1 },
   ]) {
     assert.equal(passed("error_path", bad), false);
   }

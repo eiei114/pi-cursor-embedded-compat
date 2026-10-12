@@ -130,12 +130,12 @@
     {
       "name": "error_path",
       "command": "npm run smoke:pi",
-      "exit_code": 1,
+      "exit_code": 0,
       "passed": true,
       "evidence": {
         "stdout": "",
-        "stderr": "[cursor_compat] {\"source\":\"pi-cursor-embedded-compat\",\"code\":\"signature_mismatch\",\"entryId\":\"connect-1.7.0-pi-cursor-sdk-0.2.0\",\"target\":\"dist/esm/http-headers.js\",\"graph\":{\"piCursorSdk\":\"0.2.0\",\"cursorSdk\":\"1.0.23\",\"connect\":\"1.7.0\",\"protobuf\":\"1.10.0\"},\"message\":\"known failure signature found under an unregistered content hash\"}\nError: Failed to load extension \"<smoke-root>\\error path fixture hhSaQR\\extensions\\index.ts\": Failed to load extension: [pi-cursor-embedded-compat] signature_mismatch\nHint: Start without extensions using \"pi -ne\".\n",
-        "actual_exit_code": 1,
+        "stderr": "[cursor_compat] {\"source\":\"pi-cursor-embedded-compat\",\"code\":\"signature_mismatch\",\"entryId\":\"connect-1.7.0-pi-cursor-sdk-0.2.0\",\"target\":\"dist/esm/http-headers.js\",\"graph\":{\"piCursorSdk\":\"0.2.0\",\"cursorSdk\":\"1.0.23\",\"connect\":\"1.7.0\",\"protobuf\":\"1.10.0\"},\"message\":\"known failure signature found under an unregistered content hash\"}\n",
+        "actual_exit_code": 0,
         "actual_signal": null,
         "process_exit_observed": true,
         "timed_out": false,
@@ -164,7 +164,7 @@
       "assertions": [
         {
           "id": "handled_error",
-          "expected": "The actual Pi host captures the unsupported-signature failure, leaves the target unchanged, and exits without an unhandled error",
+          "expected": "The actual Pi host reports the unsupported signature, leaves the target unchanged, and exits cleanly without an extension-load or unhandled error",
           "observed": {
             "diagnostic": {
               "source": "pi-cursor-embedded-compat",
@@ -181,9 +181,10 @@
             },
             "target_sha256": "1961c50e6332b6e6d94f8fd458393b6f9ac06e3864625c5de9a101dae2a0594d",
             "expected_unchanged_sha256": "1961c50e6332b6e6d94f8fd458393b6f9ac06e3864625c5de9a101dae2a0594d",
-            "exit_code": 1,
-            "extension_load_error": true,
-            "captured_extension_failure": true
+            "exit_code": 0,
+            "process_exit_observed": true,
+            "extension_load_error": false,
+            "unhandled_error": false
           },
           "passed": true
         }

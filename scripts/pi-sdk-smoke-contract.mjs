@@ -67,26 +67,22 @@ export function behaviorAssertions(name, observation) {
   }
 
   if (name === "error_path") {
-    const handledRuntime = observation.process_exit_observed === true
-      && observation.timed_out !== true
-      && observation.exit_code === 1
-      && observation.unhandled_error !== true;
+    const handledRuntime = cleanRuntime && observation.extension_load_error !== true;
     const passed = validDiagnostic(diagnostic)
       && diagnostic.code === "signature_mismatch"
       && observation.target_sha256 === observation.expected_unchanged_sha256
-      && observation.extension_load_error === true
-      && observation.captured_extension_failure === true
       && handledRuntime;
     return [assertion(
       "handled_error",
-      "The actual Pi host captures the unsupported-signature failure, leaves the target unchanged, and exits without an unhandled error",
+      "The actual Pi host reports the unsupported signature, leaves the target unchanged, and exits cleanly without an extension-load or unhandled error",
       {
         diagnostic: diagnostic ?? null,
         target_sha256: observation.target_sha256,
         expected_unchanged_sha256: observation.expected_unchanged_sha256,
         exit_code: observation.exit_code,
+        process_exit_observed: observation.process_exit_observed,
         extension_load_error: observation.extension_load_error === true,
-        captured_extension_failure: observation.captured_extension_failure === true,
+        unhandled_error: observation.unhandled_error === true,
       },
       passed,
     )];

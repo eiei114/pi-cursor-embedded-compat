@@ -259,7 +259,6 @@ function makeCase(name, run, targetPath, expected, additionalRuns = []) {
     timed_out: priorRun.timedOut,
     unhandled_error: UNHANDLED_ERROR_PATTERN.test(priorOutput),
     extension_load_error: EXTENSION_LOAD_ERROR_PATTERN.test(priorOutput),
-    captured_extension_failure: /Failed to load extension: \[pi-cursor-embedded-compat\] signature_mismatch/.test(priorOutput),
   } : {};
   const observation = {
     diagnostic,
@@ -277,7 +276,6 @@ function makeCase(name, run, targetPath, expected, additionalRuns = []) {
     timed_out: run.timedOut,
     unhandled_error: UNHANDLED_ERROR_PATTERN.test(fullOutput),
     extension_load_error: EXTENSION_LOAD_ERROR_PATTERN.test(fullOutput),
-    captured_extension_failure: /Failed to load extension: \[pi-cursor-embedded-compat\] signature_mismatch/.test(fullOutput),
     shell: expected.shell,
     expected_shell: expected.shell,
   };
@@ -351,8 +349,7 @@ try {
     shell: process.platform === "win32" ? "powershell.exe" : "/bin/sh",
   }));
 
-  const unexpectedLoadErrors = cases.filter((item) =>
-    item.hasLoadError && !(item.name === "error_path" && item.passed)).length;
+  const unexpectedLoadErrors = cases.filter((item) => item.hasLoadError).length;
   const unhandledErrors = cases.filter((item) => item.hasUnhandledError).length;
   const report = {
     schema_version: 1,
