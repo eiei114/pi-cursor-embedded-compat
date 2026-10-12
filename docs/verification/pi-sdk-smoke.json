@@ -134,7 +134,7 @@
       "passed": true,
       "evidence": {
         "stdout": "",
-        "stderr": "[cursor_compat] {\"source\":\"pi-cursor-embedded-compat\",\"code\":\"signature_mismatch\",\"entryId\":\"connect-1.7.0-pi-cursor-sdk-0.2.0\",\"target\":\"dist/esm/http-headers.js\",\"graph\":{\"piCursorSdk\":\"0.2.0\",\"cursorSdk\":\"1.0.23\",\"connect\":\"1.7.0\",\"protobuf\":\"1.10.0\"},\"message\":\"known failure signature found under an unregistered content hash\"}\nError: Failed to load extension \"<smoke-root>\\error path fixture VMmy5X\\extensions\\index.ts\": Failed to load extension: [pi-cursor-embedded-compat] signature_mismatch\nHint: Start without extensions using \"pi -ne\".\n",
+        "stderr": "[cursor_compat] {\"source\":\"pi-cursor-embedded-compat\",\"code\":\"signature_mismatch\",\"entryId\":\"connect-1.7.0-pi-cursor-sdk-0.2.0\",\"target\":\"dist/esm/http-headers.js\",\"graph\":{\"piCursorSdk\":\"0.2.0\",\"cursorSdk\":\"1.0.23\",\"connect\":\"1.7.0\",\"protobuf\":\"1.10.0\"},\"message\":\"known failure signature found under an unregistered content hash\"}\nError: Failed to load extension \"<smoke-root>\\error path fixture hhSaQR\\extensions\\index.ts\": Failed to load extension: [pi-cursor-embedded-compat] signature_mismatch\nHint: Start without extensions using \"pi -ne\".\n",
         "actual_exit_code": 1,
         "actual_signal": null,
         "process_exit_observed": true,

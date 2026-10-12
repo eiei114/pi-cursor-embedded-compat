@@ -20,9 +20,9 @@ import {
   UNHANDLED_ERROR_PATTERN,
   VERIFICATION_CONTRACT,
 } from "./pi-sdk-smoke-contract.mjs";
+import { writePiSdkSmokeReport } from "./pi-sdk-smoke-report.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const reportPath = resolve(root, "docs/verification/pi-sdk-smoke.json");
 const PROBE_TIMEOUT_MS = 15_000;
 const OUTPUT_LIMIT = 2 * 1024 * 1024;
 const FROZEN_VERSION = "1.1.0";
@@ -365,8 +365,12 @@ try {
     extension_load_errors: unexpectedLoadErrors,
     cases: cases.map(({ hasUnhandledError, hasLoadError, ...item }) => item),
   };
-  mkdirSync(dirname(reportPath), { recursive: true });
-  writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+  writePiSdkSmokeReport(report, {
+    root,
+    smokeRoot,
+    args: process.argv.slice(2),
+    env: process.env,
+  });
 
   const summary = cases.map((item) => ({
     name: item.name,
