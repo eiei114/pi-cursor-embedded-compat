@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3] - 2026-10-13
+
+### Fixed
+
+- Keep routine Pi SDK smoke runs from overwriting the committed platform-specific verification report.
+- Report unsupported signatures without aborting Pi extension loading; verify the handled error path against the actual host.
+
 ## [0.2.2] - 2026-09-30
 
 ### Changed

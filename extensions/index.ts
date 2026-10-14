@@ -9,7 +9,4 @@ export default function (_pi: ExtensionAPI): void {
     : target;
 
   console.error(formatDiagnostic(result));
-  if (!result.ok) {
-    throw new Error(`[pi-cursor-embedded-compat] ${result.code}`);
-  }
 }

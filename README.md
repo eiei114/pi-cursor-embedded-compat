@@ -50,7 +50,7 @@ Example shape:
 
 Registered graphs: `pi-cursor-sdk 0.2.0` / `@cursor/sdk 1.0.23` and `pi-cursor-sdk 0.3.6` / `@cursor/sdk 1.0.31`, both on `@connectrpc/connect 1.7.0` and `@bufbuild/protobuf 1.10.0`.
 
-An unknown failing signature stops the shim without modifying the file. Rollback is performed by reinstalling the dependency tree; the shim does not keep third-party backups.
+An unknown failing signature stops the shim without modifying the file and is reported in stderr; it does not abort Pi extension loading. Rollback is performed by reinstalling the dependency tree; the shim does not keep third-party backups.
 
 ## Development
 
