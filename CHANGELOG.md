@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.4] - 2026-10-16
+
+### Changed
+
+- Pin Pi SDK development and smoke verification to 1.2.0; keep the public peer range unchanged.
+
 ## [0.2.3] - 2026-10-13
 
 ### Fixed
