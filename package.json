@@ -1,6 +1,6 @@
 {
   "name": "pi-cursor-embedded-compat",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Guarded Pi compatibility shim for Cursor SDK module resolution in embedded hosts.",
   "type": "module",
   "license": "MIT",
@@ -48,10 +48,10 @@
     "@earendil-works/pi-coding-agent": "*"
   },
   "devDependencies": {
-    "@earendil-works/pi-agent-core": "1.1.0",
-    "@earendil-works/pi-ai": "1.1.0",
-    "@earendil-works/pi-coding-agent": "1.1.0",
-    "@earendil-works/pi-tui": "1.1.0",
+    "@earendil-works/pi-agent-core": "1.2.0",
+    "@earendil-works/pi-ai": "1.2.0",
+    "@earendil-works/pi-coding-agent": "1.2.0",
+    "@earendil-works/pi-tui": "1.2.0",
     "@types/node": "^26.0.0",
     "typescript": "^7.0.2"
   }

@@ -25,7 +25,7 @@ import { writePiSdkSmokeReport } from "./pi-sdk-smoke-report.mjs";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const PROBE_TIMEOUT_MS = 15_000;
 const OUTPUT_LIMIT = 2 * 1024 * 1024;
-const FROZEN_VERSION = "1.1.0";
+const FROZEN_VERSION = "1.2.0";
 const readJson = (path) => JSON.parse(readFileSync(path, "utf8"));
 const hash = (value) => createHash("sha256").update(value, "utf8").digest("hex");
 const manifest = readJson(resolve(root, "package.json"));
