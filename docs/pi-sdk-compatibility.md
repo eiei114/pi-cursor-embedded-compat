@@ -1,19 +1,19 @@
-## Pi SDK 1.2.0 compatibility
+## Pi SDK 1.4.0 compatibility
 
 This package is verified with the frozen SDK versions:
 
-- `@earendil-works/pi-agent-core`: `1.2.0`
-- `@earendil-works/pi-ai`: `1.2.0`
-- `@earendil-works/pi-coding-agent`: `1.2.0`
-- `@earendil-works/pi-tui`: `1.2.0`
+- `@earendil-works/pi-agent-core`: `1.4.0`
+- `@earendil-works/pi-ai`: `1.4.0`
+- `@earendil-works/pi-coding-agent`: `1.4.0`
+- `@earendil-works/pi-tui`: `1.4.0`
 
 These exact versions are development and verification pins only. The public
 `@earendil-works/pi-coding-agent` peer range remains `*`. This extension only
 uses `ExtensionAPI` as a type-only import; its runtime compatibility path uses
 Node APIs and does not register Pi events, tools, or commands. The template
-baseline's verified [Pi SDK 1.2.0 migration notes](https://github.com/eiei114/pi-extension-template/blob/4b0554151161eae665aa2cdc845a2d7df40e4781/docs/pi-sdk-compatibility.md)
-and the [official v1.2.0 release notes](https://github.com/earendil-works/pi/releases/tag/v1.2.0)
-identify no deprecated API used by this extension that needs replacement.
+baseline's verified Pi SDK 1.2.0 migration notes remain relevant historical
+context: they identify no deprecated API used by this extension that needs
+replacement.
 
 Pi 1.2.0 changes `before_agent_start` events to a `messageType` union; handlers
 that read user-only fields should check for `messageType === "user"` first.

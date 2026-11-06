@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.5] - 2026-11-07
+
+### Fixed
+
+- Read the Pi SDK smoke-test versions from the exact development dependency pins so Dependabot updates do not fail against an obsolete hard-coded version.
+
 ## [0.2.4] - 2026-10-16
 
 ### Changed
