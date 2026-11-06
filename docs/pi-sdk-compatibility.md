@@ -1,19 +1,22 @@
-## Pi SDK 1.4.0 compatibility
+## Pi SDK 1.5.0 compatibility
 
 This package is verified with the frozen SDK versions:
 
-- `@earendil-works/pi-agent-core`: `1.4.0`
-- `@earendil-works/pi-ai`: `1.4.0`
-- `@earendil-works/pi-coding-agent`: `1.4.0`
-- `@earendil-works/pi-tui`: `1.4.0`
+- `@earendil-works/pi-agent-core`: `1.5.0`
+- `@earendil-works/pi-ai`: `1.5.0`
+- `@earendil-works/pi-coding-agent`: `1.5.0`
+- `@earendil-works/pi-tui`: `1.5.0`
 
 These exact versions are development and verification pins only. The public
-`@earendil-works/pi-coding-agent` peer range remains `*`. This extension only
-uses `ExtensionAPI` as a type-only import; its runtime compatibility path uses
-Node APIs and does not register Pi events, tools, or commands. The template
-baseline's verified Pi SDK 1.2.0 migration notes remain relevant historical
-context: they identify no deprecated API used by this extension that needs
-replacement.
+`@earendil-works/pi-coding-agent` peer range remains `*`. The upstream
+[Pi v1.5.0 release notes](https://github.com/earendil-works/pi/releases/tag/v1.5.0)
+include a breaking change to tool-argument validation, but this extension
+registers no tools and does not use TypeBox schemas. It only uses `ExtensionAPI`
+as a type-only import; its runtime compatibility path uses Node APIs and does
+not register Pi events, tools, or commands. No deprecated API used by this
+extension needs replacement. The v1.5.0 smoke below verifies the extension
+against the actual pinned host. The template baseline's verified Pi SDK 1.2.0
+migration notes remain relevant historical context.
 
 Pi 1.2.0 changes `before_agent_start` events to a `messageType` union; handlers
 that read user-only fields should check for `messageType === "user"` first.

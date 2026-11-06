@@ -44,9 +44,9 @@ test("declares the behavior-v2 contract and parses only complete compatibility d
 
 test("smoke SDK versions follow exact manifest pins and reject installed mismatches", () => {
   const manifest = {
-    devDependencies: Object.fromEntries(SDK_NAMES.map((name) => [name, "1.4.0"])),
+    devDependencies: Object.fromEntries(SDK_NAMES.map((name) => [name, "1.5.0"])),
   };
-  const installedVersions = Object.fromEntries(SDK_NAMES.map((name) => [name, "1.4.0"]));
+  const installedVersions = Object.fromEntries(SDK_NAMES.map((name) => [name, "1.5.0"]));
   assert.deepEqual(resolveSdkVersions(manifest, installedVersions), installedVersions);
 
   assert.throws(
