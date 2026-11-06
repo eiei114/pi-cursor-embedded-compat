@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.6] - 2026-11-07
+
+### Changed
+
+- Verify Pi SDK 1.5.0 compatibility and keep the public Pi coding-agent peer range unchanged.
+
 ## [0.2.5] - 2026-11-07
 
 ### Fixed
