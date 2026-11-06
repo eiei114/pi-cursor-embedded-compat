@@ -17,6 +17,7 @@ import {
   EXTENSION_LOAD_ERROR_PATTERN,
   parseCompatDiagnostics,
   SDK_NAMES,
+  resolveSdkVersions,
   UNHANDLED_ERROR_PATTERN,
   VERIFICATION_CONTRACT,
 } from "./pi-sdk-smoke-contract.mjs";
@@ -25,17 +26,14 @@ import { writePiSdkSmokeReport } from "./pi-sdk-smoke-report.mjs";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const PROBE_TIMEOUT_MS = 15_000;
 const OUTPUT_LIMIT = 2 * 1024 * 1024;
-const FROZEN_VERSION = "1.2.0";
 const readJson = (path) => JSON.parse(readFileSync(path, "utf8"));
 const hash = (value) => createHash("sha256").update(value, "utf8").digest("hex");
 const manifest = readJson(resolve(root, "package.json"));
-const sdkVersions = Object.fromEntries(SDK_NAMES.map((name) => {
-  const version = readJson(resolve(root, "node_modules", name, "package.json")).version;
-  if (manifest.devDependencies?.[name] !== FROZEN_VERSION || version !== FROZEN_VERSION) {
-    throw new Error(`Smoke requires the exact ${FROZEN_VERSION} dev/test SDK pin for ${name}; found manifest=${manifest.devDependencies?.[name]}, installed=${version}`);
-  }
-  return [name, version];
-}));
+const installedSdkVersions = Object.fromEntries(SDK_NAMES.map((name) => [
+  name,
+  readJson(resolve(root, "node_modules", name, "package.json")).version,
+]));
+const sdkVersions = resolveSdkVersions(manifest, installedSdkVersions);
 if (manifest.peerDependencies?.["@earendil-works/pi-coding-agent"] !== "*") {
   throw new Error("Smoke requires the public Pi coding-agent peer range to remain '*'");
 }

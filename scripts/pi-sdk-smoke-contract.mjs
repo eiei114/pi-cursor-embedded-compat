@@ -5,6 +5,18 @@ export const SDK_NAMES = [
   "@earendil-works/pi-coding-agent",
   "@earendil-works/pi-tui",
 ];
+
+export function resolveSdkVersions(manifest, installedVersions) {
+  return Object.fromEntries(SDK_NAMES.map((name) => {
+    const pinnedVersion = manifest.devDependencies?.[name];
+    const installedVersion = installedVersions[name];
+    if (typeof pinnedVersion !== "string" || pinnedVersion !== installedVersion) {
+      throw new Error(`Smoke requires ${name} to match its exact package.json devDependency pin; found manifest=${pinnedVersion}, installed=${installedVersion}`);
+    }
+    return [name, installedVersion];
+  }));
+}
+
 export const UNHANDLED_ERROR_PATTERN = /UnhandledPromiseRejection|unhandled rejection|uncaught exception|shutdown error/i;
 export const EXTENSION_LOAD_ERROR_PATTERN = /Failed to load extension|Error loading extension/i;
 

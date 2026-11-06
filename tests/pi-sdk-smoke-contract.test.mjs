@@ -3,6 +3,8 @@ import test from "node:test";
 import {
   behaviorAssertions,
   parseCompatDiagnostics,
+  resolveSdkVersions,
+  SDK_NAMES,
   VERIFICATION_CONTRACT,
 } from "../scripts/pi-sdk-smoke-contract.mjs";
 
@@ -38,6 +40,23 @@ test("declares the behavior-v2 contract and parses only complete compatibility d
   ), [diagnostic()]);
   assert.deepEqual(parseCompatDiagnostics("[cursor_compat] {\"source\":\"partial\"}"), [{ source: "partial" }]);
   assert.deepEqual(parseCompatDiagnostics("not a diagnostic"), []);
+});
+
+test("smoke SDK versions follow exact manifest pins and reject installed mismatches", () => {
+  const manifest = {
+    devDependencies: Object.fromEntries(SDK_NAMES.map((name) => [name, "1.4.0"])),
+  };
+  const installedVersions = Object.fromEntries(SDK_NAMES.map((name) => [name, "1.4.0"]));
+  assert.deepEqual(resolveSdkVersions(manifest, installedVersions), installedVersions);
+
+  assert.throws(
+    () => resolveSdkVersions(manifest, { ...installedVersions, [SDK_NAMES[0]]: "1.2.0" }),
+    /exact package\.json devDependency pin/,
+  );
+  assert.throws(
+    () => resolveSdkVersions({ devDependencies: {} }, installedVersions),
+    /exact package\.json devDependency pin/,
+  );
 });
 
 test("extension load and happy path require real diagnostic and target-file observations", () => {
