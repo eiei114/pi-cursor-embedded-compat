@@ -12,11 +12,15 @@ const REQUIRED_PACKAGES = [
   "@bufbuild/protobuf",
 ] as const;
 
-type RequiredPackage = (typeof REQUIRED_PACKAGES)[number];
+export type RequiredPackage = (typeof REQUIRED_PACKAGES)[number];
 
-interface PackageInfo {
+export interface PackageInfo {
   root: string;
   version: string;
+}
+
+export interface LiveTargetDependencies {
+  resolvePackageInfo(packageName: RequiredPackage): PackageInfo | undefined;
 }
 
 function readPackageInfo(packageName: RequiredPackage): PackageInfo | undefined {
@@ -51,6 +55,10 @@ function readPackageInfo(packageName: RequiredPackage): PackageInfo | undefined 
   }
 }
 
+const nodeLiveTargetDependencies: LiveTargetDependencies = {
+  resolvePackageInfo: readPackageInfo,
+};
+
 function graphMatches(left: DependencyGraph, right: DependencyGraph): boolean {
   return (
     left.piCursorSdk === right.piCursorSdk &&
@@ -60,10 +68,12 @@ function graphMatches(left: DependencyGraph, right: DependencyGraph): boolean {
   );
 }
 
-export function resolveLiveTarget(): ResolutionResult {
+export function resolveLiveTarget(
+  dependencies: LiveTargetDependencies = nodeLiveTargetDependencies,
+): ResolutionResult {
   const info = new Map<RequiredPackage, PackageInfo>();
   for (const packageName of REQUIRED_PACKAGES) {
-    const packageInfo = readPackageInfo(packageName);
+    const packageInfo = dependencies.resolvePackageInfo(packageName);
     if (!packageInfo) {
       return {
         ok: false,
