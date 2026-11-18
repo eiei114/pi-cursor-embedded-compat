@@ -33,13 +33,18 @@ function assertBoundedFailureDiagnostic(result, { code, message, graph }) {
   const diagnostic = formatDiagnostic(result);
 
   assert.match(diagnostic, /^\[cursor_compat\] \{/);
-  assert.ok(diagnostic.includes(`"code":"${code}"`));
-  assert.ok(diagnostic.includes(`"message":"${message}"`));
+  const payload = JSON.parse(diagnostic.slice("[cursor_compat] ".length));
+  assert.deepEqual(payload, {
+    source: "pi-cursor-embedded-compat",
+    code,
+    ...(graph ? { graph } : {}),
+    message,
+  });
   if (graph) assert.deepEqual(result.graph, graph);
   for (const root of Object.values(packageRoots)) {
     assert.ok(!diagnostic.includes(root), "diagnostic must not expose resolved package roots");
   }
-  assert.doesNotMatch(diagnostic, /[A-Za-z]:\\|dependency file contents|SECRET_DEPENDENCY_FILE_CONTENTS|protoBase64/);
+  assert.doesNotMatch(diagnostic, /[A-Za-z]:[\\/]|dependency file contents|SECRET_DEPENDENCY_FILE_CONTENTS|protoBase64/);
 }
 
 test("resolves a supported graph with injected package information", () => {
@@ -60,6 +65,30 @@ test("resolves a supported graph with injected package information", () => {
   ]);
   assert.equal(result.ok, true);
   assert.equal(result.entry, supportedEntry);
+  assert.deepEqual(result.graph, supportedEntry.graph);
+  assert.equal(
+    result.targetPath,
+    path.join(packageRoots["@connectrpc/connect"], supportedEntry.targetRelativePath),
+  );
+});
+
+test("snapshots package information when the injected resolver reuses an object", () => {
+  const versions = {
+    "pi-cursor-sdk": supportedEntry.graph.piCursorSdk,
+    "@cursor/sdk": supportedEntry.graph.cursorSdk,
+    "@connectrpc/connect": supportedEntry.graph.connect,
+    "@bufbuild/protobuf": supportedEntry.graph.protobuf,
+  };
+  const packageInfo = { root: "", version: "" };
+  const result = resolveLiveTarget({
+    resolvePackageInfo(packageName) {
+      packageInfo.root = packageRoots[packageName];
+      packageInfo.version = versions[packageName];
+      return packageInfo;
+    },
+  });
+
+  assert.equal(result.ok, true);
   assert.deepEqual(result.graph, supportedEntry.graph);
   assert.equal(
     result.targetPath,

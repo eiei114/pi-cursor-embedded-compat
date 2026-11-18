@@ -81,7 +81,7 @@ export function resolveLiveTarget(
         message: `required package could not be resolved: ${packageName}`,
       };
     }
-    info.set(packageName, packageInfo);
+    info.set(packageName, { root: packageInfo.root, version: packageInfo.version });
   }
 
   const graph: DependencyGraph = {
