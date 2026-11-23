@@ -98,6 +98,45 @@ test("fails closed for unknown content without a safe signature", async () => {
   assert.equal(result.code, "signature_mismatch");
 });
 
+function assertPreflightFailure(entry, readText, expectedCode) {
+  let writes = 0;
+  const result = applyPatchAtPath("ignored", entry, entry.graph, {
+    readText,
+    writeAtomic: () => {
+      writes += 1;
+    },
+  });
+
+  assert.equal(writes, 0, "preflight failure must not call writeAtomic");
+  assert.equal(result.ok, false);
+  assert.equal(result.code, expectedCode);
+  return result;
+}
+
+test("does not write when the initial read fails", () => {
+  assertPreflightFailure(entryFor(), () => {
+    throw new Error("initial read failed");
+  }, "read_failed");
+});
+
+for (const [count, source] of [
+  [0, "export const unrelated = true;\n"],
+  [2, `${failureSignature}\n${failureSignature}\n`],
+]) {
+  test(`does not write a registered original with ${count} failure signatures`, () => {
+    // Keep the patched hash distinct even when replacing the signature would be a no-op.
+    const entry = entryFor(source, replacement);
+    const result = assertPreflightFailure(entry, () => source, "signature_mismatch");
+    assert.equal(result.message, "registered original hash does not contain exactly one failure signature");
+  });
+}
+
+test("does not write when the transform produces an unexpected hash", () => {
+  const source = `${failureSignature}\n`;
+  const entry = entryFor(source, `${replacement}\n// different expected output\n`);
+  assertPreflightFailure(entry, () => source, "verify_failed");
+});
+
 test("returns bounded structured diagnostics without file content", () => {
   const result = {
     ok: false,
