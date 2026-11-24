@@ -174,3 +174,29 @@ test("maps write and read-back failures to bounded codes", () => {
   assert.equal(failingVerify.ok, false);
   assert.equal(failingVerify.code, "verify_failed");
 });
+
+test("reports verify_failed without rewriting when the patched file cannot be read back", () => {
+  const entry = entryFor();
+  const targetPath = "ignored";
+  const calls = [];
+  let reads = 0;
+  const result = applyPatchAtPath(targetPath, entry, entry.graph, {
+    readText: (target) => {
+      calls.push(["read", target]);
+      if (++reads === 2) throw new Error("read-back failed");
+      return fixture;
+    },
+    writeAtomic: (target, content) => {
+      calls.push(["write", target, content]);
+    },
+  });
+
+  assert.deepEqual(calls, [
+    ["read", targetPath],
+    ["write", targetPath, patchedFixture],
+    ["read", targetPath],
+  ]);
+  assert.equal(result.ok, false);
+  assert.equal(result.code, "verify_failed");
+  assert.equal(result.message, "patched dependency file could not be read back");
+});
